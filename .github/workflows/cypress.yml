@@ -1,0 +1,72 @@
+name: Cypress E2E Tests
+on:
+  schedule:
+    - cron: '00 2 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  cypress-run:
+    env:
+      CYPRESS_host: https://example.cypress.io
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    runs-on: [self-hosted, do]
+
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
+
+    steps:
+      - name: Set Date
+        id: date
+        run: echo "currentDate=$(TZ=Asia/Thimphu date +%d-%b-%Y\ %H:%M:%S\ %Z)" >> $GITHUB_OUTPUT
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: Setup Node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.16.0'
+
+      - name: Cache node packages
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-cache
+
+      - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: yarn --frozen-lockfile --prefer-offline
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1.2.0
+        with:
+          chrome-version: stable
+
+      - run: chrome --version
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          record: true
+          parallel: true
+          project: ./
+          spec: ./cypress/e2e/
+          wait-on: 
+          config-file: cypress.config.js
+          browser: chrome
+
+        env:
+          COMMIT_INFO_MESSAGE: 'Test ${{ steps.date.outputs.currentDate }} '
+          COMMIT_INFO_AUTHOR: 'PAA'
