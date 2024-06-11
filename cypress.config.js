@@ -5,8 +5,6 @@ export const baseConfig = {
   fixturesFolder: "./cypress/fixtures",
   modifyObstructiveCode: false,
   video: false,
-  videosFolder: "../../dist/cypress/apps/tg-e2e/videos",
-  screenshotsFolder: "../../dist/cypress/apps/tg-e2e/screenshots",
   chromeWebSecurity: false,
   viewportHeight: 1080,
   viewportWidth: 1920,
