@@ -63,7 +63,7 @@ jobs:
           parallel: true
           project: ./
           spec: ./cypress/e2e/
-          wait-on: 
+          wait-on: https://example.cypress.io
           config-file: cypress.config.js
           browser: chrome
 
