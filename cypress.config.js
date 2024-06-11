@@ -1,6 +1,7 @@
+const { defineConfig } = require('cypress')
 
-export const baseConfig = {
-  projectId: 'yyh18j',
+module.exports = defineConfig({
+  projectId: 'q8wkgq',
   fileServerFolder: ".",
   fixturesFolder: "./cypress/fixtures",
   modifyObstructiveCode: false,
@@ -13,15 +14,6 @@ export const baseConfig = {
   defaultCommandTimeout: 20000,
 
   e2e: {
-    experimentalStudio: true,
-    setupNodeEvents(on, config) {
-      // event
-    },
-    specPattern: "./cypress/*.{js,jsx,ts,tsx}",
-    supportFile: "./cypress/support/e2e.ts",
+    baseUrl: 'https://example.cypress.io',
   },
-
-  component: {
-    specPattern: "**/*.cy.ts",
-  },
-};
+});
