@@ -1,8 +1,5 @@
 name: Cypress E2E Tests
-on:
-  schedule:
-    - cron: '00 2 * * 1-5'
-  workflow_dispatch:
+on: push
 
 jobs:
   cypress-run:
@@ -45,8 +42,7 @@ jobs:
             ${{ runner.os }}-cypress-cache
 
       - name: Install Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile --prefer-offline
+        run: yarn install
 
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1.2.0
