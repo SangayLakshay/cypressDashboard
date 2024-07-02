@@ -14,6 +14,6 @@ module.exports = defineConfig({
   defaultCommandTimeout: 20000,
 
   e2e: {
-    baseUrl: 'https://example.cypress.io',
+    baseUrl: 'https://parabank.parasoft.com/parabank/index.htm',
   },
 });

@@ -5,7 +5,7 @@ on:
 jobs:
   cypress-run:
     env:
-      CYPRESS_host: https://example.cypress.io
+      CYPRESS_host: https://parabank.parasoft.com/parabank/index.htm
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -60,7 +60,7 @@ jobs:
           parallel: true
           project: ./
           spec: ./cypress/e2e/
-          wait-on: https://example.cypress.io
+          wait-on: https://parabank.parasoft.com/parabank/index.htm
           config-file: cypress.config.js
           browser: chrome
 
