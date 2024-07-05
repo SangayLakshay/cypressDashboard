@@ -60,7 +60,7 @@ jobs:
           parallel: true
           project: ./
           spec: ./cypress/e2e/
-          wait-on: https://parabank.parasoft.com/parabank/index.htm
+          wait-on: https://parabank.parasoft.com/parabank/index.html
           config-file: cypress.config.js
           browser: chrome
 
