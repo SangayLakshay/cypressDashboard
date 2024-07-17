@@ -13,33 +13,21 @@ Here's why us, as QAs, should use Cypress Dashboard:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#cypress-dashboard">Cypress Dashboard</a>
-    </li>
-    <li><a href="#">Hands on Session</a></li>
-    <li><a href="#">Creating Personal Repository</a></li>
-    <li><a href="#">Setting up a small cypress project</a></li>
-    <li><a href="#">Github Workflow</a></li>
-    <li>
-      <a href="#">New Project on Cypress Dashboard</a>
-      <ul>
-        <li><a href="#">Set Up Project Keys</a></li>
-        <li><a href="#">Run from CLI</a></li>
-        <li><a href="#">Github Secret Key</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#">Set up Runner</a>
-        <li><a href="#">Set Permissions</a></li>
-    </li>
-    <li><a href="#">Push Project</a></li>
-    <li><a href="#run-test">Run Test</a></li>
-  </ol>
-</details>
+
+## Table of Contents
+- [Cypress Dashboard](#cypress-dashboard)
+- [Hands on Session](#hands-on-session)
+- [Creating Personal Repository](#creating-personal-repository)
+- [Setting up a small cypress project](#setting-up-a-small-cypress-project)
+- [Github Workflow](#github-workflow)
+- [New Project on Cypress Dashboard](#new-project-on-cypress-dashboard)
+  - [Set Up Project Keys](#set-up-project-keys)
+  - [Run from CLI](#run-from-cli)
+  - [Github Secret Key](#github-secret-key)
+- [Set up Runner](#set-up-runner)
+  - [Set Permissions](#set-permissions)
+- [Push Project](#push-project)
+- [Run Test](#run-test)
 
 <!-- GETTING STARTED -->
 ## Hands On Session
@@ -52,12 +40,13 @@ For this you can use your personal git accounts or the existing selisegroup acco
 Here's how:
 
 1. In you github account, click on the top left icon. There click on Home
+
 ![image](https://github.com/SangayLakshay/cypressDashboard/assets/138775159/b7cfe205-9d8c-4f79-b569-209fee9c03b3)
 
-2. At the center there, enter a Repository name, select either Public or Private and click Create
+3. At the center there, enter a Repository name, select either Public or Private and click Create
 ![image](https://github.com/SangayLakshay/cypressDashboard/assets/138775159/38d25679-3336-4a60-a6c3-0f2064c9aff6)
 
-3. Then follow the steps given to clone the Repository,
+4. Then follow the steps given to clone the Repository,
 ![image](https://github.com/SangayLakshay/cypressDashboard/assets/138775159/c2304bfd-88b3-4b0e-9f60-49ebcbc16edc)
 Create a new folder, then in terminal run the commands given one by one.
 
@@ -73,6 +62,8 @@ Then create some test files, you can copy from this Repository.
 
 ## Github Workflow
 The Github Workflow will be in the path `/.github/workflows/cypress.yml`, in your project. Here is the <a href="https://docs.github.com/en/actions/using-workflows/about-workflows">github workflow documentation</a> if you want to learn at a deeper level.
+
+There is a place where you can look for extentions for the workflow, <a href="https://github.com/marketplace?page=2&type=actions">here</a>
 
 The Workflow for Cypress Dashboard:
 ```
@@ -127,6 +118,7 @@ jobs: #this is the main workflow
       - name: Install Dependencies
         run: yarn install
 
+      # different browsers can replace this section, for the code look below
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1.2.0
         with:
@@ -144,12 +136,35 @@ jobs: #this is the main workflow
           spec: ./cypress/e2e/
           wait-on: https://parabank.parasoft.com/parabank/index.htm
           config-file: cypress.config.js
+          # if your using a different browser then this part should change respectively
           browser: chrome
 
         env:
           COMMIT_INFO_MESSAGE: 'Test ${{ steps.date.outputs.currentDate }} '
           COMMIT_INFO_AUTHOR: 'PAA' # give your own name should be fine
 ```
+
+For FireFox browser:
+```
+- name: Setup firefox
+    id: setup-firefox
+    uses: browser-actions/setup-firefox@v1
+    with:
+      firefox-version: ${{ matrix.firefox }}
+- run: |
+    echo Installed firefox versions: ${{ steps.setup-firefox.outputs.firefox-version }}
+    ${{ steps.setup-firefox.outputs.firefox-path }} --version
+```
+Referred from <a href="https://github.com/browser-actions/setup-firefox">here</a>, this repo also had a branch with workflow configured for firefox, qa/different-browser
+
+For Electron browser:
+```
+- name: Electron Builder Action
+  uses: samuelmeuli/action-electron-builder@v1.6.0
+```
+Referred from <a href="https://github.com/marketplace/actions/electron-builder-action">here</a>
+
+#### Other Documents to refer:
 
 Workflow trigger <a href="https://docs.github.com/en/actions/using-workflows/triggering-a-workflow">docs</a>
 
