@@ -24,29 +24,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: main
+          ref: qa/different-browser
 
       - name: Setup Node version
         uses: actions/setup-node@v3
         with:
           node-version: '16.16.0'
 
-      - name: Cache node packages
-        uses: actions/cache@v3
-        id: cache-node-modules
-        with:
-          path: |
-            **/node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-cypress-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cypress-cache
-
       - name: Install Dependencies
         run: yarn install
 
       - name: Setup firefox
-        id: setup-firefox
         uses: browser-actions/setup-firefox@v1
         with:
           firefox-version: ${{ matrix.firefox }}
