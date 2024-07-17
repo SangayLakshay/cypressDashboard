@@ -35,6 +35,7 @@ jobs:
         run: yarn install
 
       - name: Setup firefox
+        id: setup-firefox
         uses: browser-actions/setup-firefox@v1
         with:
           firefox-version: ${{ matrix.firefox }}
