@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: qa/different-browser
+          ref: main
 
       - name: Setup Node version
         uses: actions/setup-node@v3
@@ -34,6 +34,15 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
+      - name: Setup firefox
+        id: setup-firefox
+        uses: browser-actions/setup-firefox@v1
+        with:
+          firefox-version: ${{ matrix.firefox }}
+      - run: |
+          echo Installed firefox versions: ${{ steps.setup-firefox.outputs.firefox-version }}
+          ${{ steps.setup-firefox.outputs.firefox-path }} --version
+
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
@@ -42,9 +51,9 @@ jobs:
           parallel: true
           project: ./
           spec: ./cypress/e2e/
-          browser: firefox
           wait-on: https://parabank.parasoft.com/parabank/index.html
           config-file: cypress.config.js
+          browser: firefox
 
         env:
           COMMIT_INFO_MESSAGE: 'Test ${{ steps.date.outputs.currentDate }} '
