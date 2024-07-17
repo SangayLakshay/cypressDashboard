@@ -53,9 +53,9 @@ jobs:
           parallel: true
           project: ./
           spec: ./cypress/e2e/
+          browser: firefox
           wait-on: https://parabank.parasoft.com/parabank/index.html
           config-file: cypress.config.js
-          browser: firefox
 
         env:
           COMMIT_INFO_MESSAGE: 'Test ${{ steps.date.outputs.currentDate }} '
