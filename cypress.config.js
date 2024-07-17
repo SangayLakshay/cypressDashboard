@@ -14,6 +14,6 @@ module.exports = defineConfig({
   defaultCommandTimeout: 20000,
 
   e2e: {
-    baseUrl: 'https://parabank.parasoft.com/parabank/index.htm',
+    baseUrl: 'https://whs-server1.whscrm.selise.tech/auth',
   },
 });
